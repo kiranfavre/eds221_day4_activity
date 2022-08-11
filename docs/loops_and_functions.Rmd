@@ -1,0 +1,77 @@
+---
+title: "loops_and_functions"
+author: "Kiran Favre"
+date: "2022-08-11"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+## Part 1
+
+### Task 1
+
+```{r}
+weekdays <- c("Monday", "Tuesday", "wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+
+transects <- c("Transect A", "Transect B", "Transect C")
+
+day_transect_matrix <- data.frame(mode = "numeric", length = length(weekdays))
+
+for (i in seq_along(weekdays)) {
+  for (j in seq_along(transects)) {
+    day_transect <- (paste(weekdays[i], "-", transects[j])) 
+    day_transect_matrix[i,j] <- day_transect
+  }
+}
+day_transect_matrix
+```
+
+## Part 2
+
+### Task 2
+
+```{r}
+force <- function(mass, acceleration){
+  print(paste("The resulting force is", (mass * acceleration), "Newtons."))
+}
+
+#test it out
+
+force(12, 45)
+```
+
+### Task 3
+
+```{r}
+fish_parms <- tribble(
+  ~sci_name, ~common_name, ~a_est, ~b_est,
+  "Chanos chanos", "Milkfish", 0.0905, 2.52,
+  "Sphyraena barracuda", "Great Barracuda", 0.0181, 3.27,
+  "Caranx ignobilis", "Giant trevally", 0.0353, 3.05,
+)
+
+fish_weight <- function(fish_name, tot_length) {
+  fish_df <-dplyr::filter(.data = fish_parms, common_name %in% fish_name)
+  var_a <- fish_df$a_est
+  var_b <- fish_df$b_est
+  weight <- a_est * (tot_length ^ b_est)
+  print(paste("the weight is", weight))
+}
+
+fish_weight("Great Barracuda", 12)
+```
+
+```{r}
+fish_weight <- function(fish_name, tot_length) {
+  fish_df <-dplyr::filter(.data = fish_parms, common_name %in% fish_name)
+  var_a <- fish_df$a_est
+  var_b <- fish_df$b_est
+  weight <- var_a * (tot_length ^ var_b)
+  print(paste("the weight is", weight))
+}
+
+```
